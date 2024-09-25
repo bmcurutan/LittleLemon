@@ -49,6 +49,7 @@ class HomeViewController: UIViewController {
         // Order
         menuTableView.dataSource = self
         menuTableView.delegate = self
+        menuTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(menuTableView)
         NSLayoutConstraint.activate([
             menuTableView.topAnchor.constraint(equalTo: aboutView.bottomAnchor, constant: 24),
@@ -65,7 +66,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell() // TODO
+        let cell = menuTableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell() 
         cell.textLabel?.text = viewModel.menuItems[indexPath.row].title
         return cell
     }
@@ -73,6 +74,11 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigationController?.pushViewController(MenuItemViewController(viewModel.menuItems[indexPath.row]), animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

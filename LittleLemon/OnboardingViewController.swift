@@ -50,6 +50,10 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        firstNameField.text = UserDefaults.standard.string(forKey: kFirstName)
+        lastNameField.text = UserDefaults.standard.string(forKey: kLastName)
+        emailField.text = UserDefaults.standard.string(forKey: kEmail)
+
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
